@@ -1,5 +1,6 @@
 
 import  React from 'react'
+import {fetchRepos} from '../utils/api'
 
 function LanguagesNav({selectedLanguage, showSelected}) {
   const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
@@ -26,27 +27,58 @@ export default class Popular extends React.Component {
   constructor(props) {
     super(props);
     this.initialState();
-    this.showSelected = this.showSelected.bind(this);
+    this.updateLanguage = this.updateLanguage.bind(this);
+    this.isLoading = this.isLoading.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateLanguage(this.state.selectedLanguage)
   }
 
   initialState() {
     this.state = {
-      selectedLanguage: "All"
+      selectedLanguage: "All",
+      error: null,
+      repos: null
     }
   }
 
-  showSelected(selectedLanguage) {
+  updateLanguage(selectedLanguage) {
     this.setState({
-      selectedLanguage
+      selectedLanguage,
+      error: null,
+      repos: null
     })
-    // this.showSelected = this.showSelected.bind(this);
+    fetchRepos(selectedLanguage)
+      .then(repos => {
+        this.setState({
+          repos,
+          error: null
+        });
+      })
+      .catch((error)=> {
+        this.setState({
+          error
+        });
+      })
   }
-  render() {
 
+  isLoading() {
+    return !this.state.repos && !this.state.error
+  }
+
+ 
+  render() { 
+    const { selectedLanguage, repos, error } = this.state
     return (
       <React.Fragment>
-        <LanguagesNav selectedLanguage={this.state.selectedLanguage} showSelected={this.showSelected}>
+        <LanguagesNav selectedLanguage={selectedLanguage} showSelected={this.updateLanguage}>
         </LanguagesNav>
+        {this.isLoading() && <p>LOADING</p>}
+
+{error && <p>{error}</p>}
+
+{repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
       </React.Fragment>
     )
   }
