@@ -33,22 +33,26 @@ const CardView = ({ repo }) => {
       <Card.Img variant="top" alt={`Avatar for ${repo.login}`} src={repo.owner.avatar_url} />
       <Card.Body>
         <Card.Title className="text-center">
-          <Card.Link href={repo.html_url}>{repo.owner.login}
+          <Card.Link href={`https://github.com/${repo.owner.login}`}>{repo.owner.login}
           </Card.Link>
         </Card.Title>
         <ListGroup variant="flush">
-        <ListGroup.Item> 
-          <FaStar className={"mb-2 mr-2"} color='rgb(255, 215, 0)' size={22}/>
-          {repo.stargazers_count.toLocaleString()} stars
+          <ListGroup.Item> 
+            <FaUser color='rgb(255, 191, 116)' size={22} />
+            <Card.Link href={repo.html_url}>{repo.owner.login}</Card.Link>
           </ListGroup.Item>
-        <ListGroup.Item>
-          <FaCodeBranch color='rgb(129, 195, 245)' size={22} />
-          {repo.forks.toLocaleString()} forks
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <FaExclamationTriangle color='rgb(241, 138, 147)' size={22} />
-          {repo.open_issues.toLocaleString()} open
-        </ListGroup.Item>
+          <ListGroup.Item> 
+            <FaStar color='rgb(255, 215, 0)' size={22}/>
+            {repo.stargazers_count.toLocaleString()} stars
+            </ListGroup.Item>
+          <ListGroup.Item>
+            <FaCodeBranch color='rgb(129, 195, 245)' size={22} />
+            {repo.forks.toLocaleString()} forks
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <FaExclamationTriangle color='rgb(241, 138, 147)' size={22} />
+            {repo.open_issues.toLocaleString()} open
+          </ListGroup.Item>
         </ListGroup>
       </Card.Body>
     </Card>
@@ -56,14 +60,10 @@ const CardView = ({ repo }) => {
 }
 
 function ReposGrid ({ repos }) {;
-  let cardObject = {};
-  // const { login, avatar_url } = owner;
   return (
     <CardColumns> {
       repos.map(( repo, index ) => 
       {
-        const { name, owner, html_url, stargazers_count, forks, open_issues } = repo
-        const { login, avatar_url } = owner;
         repo["index"] = index+1;
         return (
           <CardView key={index} {...{repo}}>
@@ -80,7 +80,6 @@ export default class Popular extends React.Component {
   constructor(props) {
     super(props);
     this.initialState();
-    this.updateLanguage = this.updateLanguage.bind(this);
   }
 
   componentDidMount() {
@@ -95,7 +94,7 @@ export default class Popular extends React.Component {
     }
   }
 
-  updateLanguage(selectedLanguage) {
+  updateLanguage = (selectedLanguage) => {
     this.setState({
       selectedLanguage,
       error: null,
@@ -112,6 +111,7 @@ export default class Popular extends React.Component {
       this.populateState(repos, selectedLanguage);
     })
     .catch((error)=> {
+      console.log(error);
       this.setErrorState(error);
     })
     .finally( () => {
