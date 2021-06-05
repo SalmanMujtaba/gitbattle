@@ -50,17 +50,25 @@ li {
   width: 31%;
 }
 
-img {
-  height: 20rem;
-  width: 20rem;
+svg {
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
 }
-
-@mixin mediaQuery {
-  @media screen and (max-width: 768px) {
-    .card-columns {
-      .card {
-        width: 100%;
-      }
-    }
+.spinner-container {
+  z-index: 99999;
+  height: 100%;
+  width: 100%;
+  .spinner-border {
+    width: 3rem;
+    height: 3rem;
   }
 }
+// @mixin mediaQuery {
+//   @media screen and (max-width: 768px) {
+//     .card-columns {
+//       .card {
+//         width: 100%;
+//       }
+//     }
+//   }
+// }

@@ -1,26 +1,30 @@
 import React from "react";
 import  ReactDOM  from 'react-dom'
 import './styles/index.scss'
-// import Container from 'react-bootstrap/Container'
-// import Nav from 'react-bootstrap/Nav'
+import Spinner from 'react-bootstrap/Spinner';
 import Popular from './components/Popular'
 
 class App extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSpinner: true
+    }
+  }
+
+  spinnerBoolean = (spinnerValue) => {
+    this.setState(( isSpinner ) => ({ isSpinner: spinnerValue }));
+  }
+
   render() {
-    // const languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python'];
     return(
-      <div className='container'>
-        <Popular />
-      </div>
-      // <Container>
-      //   <Nav className="justify-content-center" activeKey="/home" onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}>
-      //     {
-      //       languages.map((language) => (
-      //         <Nav.Item><Nav.Link eventKey="link-2">{language}</Nav.Link><Nav.item/>
-      //       ))
-      //     }
-      //   </Nav>
-      // </Container>
+      <React.Fragment>
+        {this.state.isSpinner && <div className="spinner-container flex-center"><Spinner animation="border" /></div>}
+        <div className='container'>
+          <Popular isSpinner={this.spinnerBoolean}/>
+        </div>
+      </React.Fragment>
     )
   }
 }
