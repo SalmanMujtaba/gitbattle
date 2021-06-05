@@ -1,79 +1,8 @@
 
 import  React from 'react';
-import {fetchRepos} from '../utils/api';
-import Card from 'react-bootstrap/Card';
-import CardColumns from 'react-bootstrap/CardColumns';
-import ListGroup from 'react-bootstrap/ListGroup';
-import { FaUser, FaStar, FaCodeBranch, FaExclamationTriangle } from 'react-icons/fa';
-
-function LanguagesNav({selectedLanguage, showSelected}) {
-  const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
-
-  return (
-    <ul className='flex-center'>
-    {
-      languages.map((language) => (
-      <li key={language}>
-        <button 
-          onClick={()=> showSelected(language)} 
-          style={language === selectedLanguage? {color: "blue"}: null} 
-          className='btn-clear nav-link'>{language}
-        </button>
-      </li>
-    ))
-    }
-  </ul>
-  )
-}
-
-const CardView = ({ repo }) => {
-  return (
-    <Card className={"mb-4"}>
-      <Card.Header className={'text-center'}>{`#${repo.index}`}</Card.Header>
-      <Card.Img variant="top" alt={`Avatar for ${repo.login}`} src={repo.owner.avatar_url} />
-      <Card.Body>
-        <Card.Title className="text-center">
-          <Card.Link href={`https://github.com/${repo.owner.login}`}>{repo.owner.login}
-          </Card.Link>
-        </Card.Title>
-        <ListGroup variant="flush">
-          <ListGroup.Item> 
-            <FaUser color='rgb(255, 191, 116)' size={22} />
-            <Card.Link href={repo.html_url}>{repo.owner.login}</Card.Link>
-          </ListGroup.Item>
-          <ListGroup.Item> 
-            <FaStar color='rgb(255, 215, 0)' size={22}/>
-            {repo.stargazers_count.toLocaleString()} stars
-            </ListGroup.Item>
-          <ListGroup.Item>
-            <FaCodeBranch color='rgb(129, 195, 245)' size={22} />
-            {repo.forks.toLocaleString()} forks
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <FaExclamationTriangle color='rgb(241, 138, 147)' size={22} />
-            {repo.open_issues.toLocaleString()} open
-          </ListGroup.Item>
-        </ListGroup>
-      </Card.Body>
-    </Card>
-  );
-}
-
-function ReposGrid ({ repos }) {;
-  return (
-    <CardColumns> {
-      repos.map(( repo, index ) => 
-      {
-        repo["index"] = index+1;
-        return (
-          <CardView key={index} {...{repo}}>
-          </CardView>
-        )
-      })
-      }
-    </CardColumns>
-  )
-}
+import { fetchRepos } from '../utils/api';
+import { Header } from './Header';
+import ReposGrid from './Grid';
 
 export default class Popular extends React.Component {
 
@@ -140,8 +69,8 @@ export default class Popular extends React.Component {
     
     return (
       <React.Fragment>
-        <LanguagesNav selectedLanguage={selectedLanguage} showSelected={this.updateLanguage}>
-        </LanguagesNav>
+        <Header selectedLanguage={selectedLanguage} showSelected={this.updateLanguage}>
+        </Header>
         {error && <p>{error}</p>}
         {repos[selectedLanguage] && <ReposGrid repos={repos[selectedLanguage]} />}
       </React.Fragment>
