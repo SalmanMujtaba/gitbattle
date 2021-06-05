@@ -3,6 +3,7 @@ import  ReactDOM  from 'react-dom'
 import './styles/index.scss'
 import Spinner from 'react-bootstrap/Spinner';
 import Popular from './components/Popular'
+import SpinnerCustom from './components/SpinnerCustom'
 
 class App extends React.Component {
   
@@ -20,7 +21,7 @@ class App extends React.Component {
   render() {
     return(
       <React.Fragment>
-        {this.state.isSpinner && <div className="spinner-container flex-center"><Spinner animation="border" /></div>}
+        {this.state.isSpinner && <div className="spinner-container flex-center"><SpinnerCustom /></div>}
         <div className='container'>
           <Popular isSpinner={this.spinnerBoolean}/>
         </div>
