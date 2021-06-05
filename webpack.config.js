@@ -19,5 +19,10 @@ module.exports = {
       template: 'app/index.html'
     })
   ],
-  devtool: 'eval-source-map'
+  devtool: 'eval-source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 4200,
+  },
 }
