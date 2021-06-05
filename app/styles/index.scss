@@ -41,3 +41,26 @@ li {
   text-decoration: none;
   color: inherit;
 }
+
+.card-columns {
+  display: flex;
+  flex-wrap: wrap;
+}
+.card-columns .card {
+  width: 31%;
+}
+
+img {
+  height: 20rem;
+  width: 20rem;
+}
+
+@mixin mediaQuery {
+  @media screen and (max-width: 768px) {
+    .card-columns {
+      .card {
+        width: 100%;
+      }
+    }
+  }
+}
