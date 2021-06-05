@@ -1,7 +1,6 @@
 import React from "react";
 import  ReactDOM  from 'react-dom'
 import './styles/index.scss'
-import Spinner from 'react-bootstrap/Spinner';
 import Popular from './components/Popular'
 import SpinnerCustom from './components/SpinnerCustom'
 
@@ -30,7 +29,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
+ReactDOM.render (
   <App/>,
   document.getElementById('app')
 )
